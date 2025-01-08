@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HomePage, LoginPage } from '../ui';
 import { ProtectedRoute } from './private-route';
-import { LoginPage, MainPage } from '../ui';
 
 export const NavigationRouter = () => {
 	return (
@@ -10,7 +10,7 @@ export const NavigationRouter = () => {
 					<Route index element={<LoginPage />} />
 					<Route index element={
 						<ProtectedRoute>
-							<MainPage />
+							<HomePage />
 						</ProtectedRoute>}
 					/>
 				</Route>
