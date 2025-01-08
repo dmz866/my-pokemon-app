@@ -1,21 +1,26 @@
 import { useState } from "react";
+import Modal from 'react-modal';
 import { searchPokemons } from '../../../api/repositories';
 import { Pokemon } from "../../../models";
-import { PokemonCard } from "../../components";
+import { PokemonCard, PokemonDetails } from "../../components";
 
 export const HomePage = () => {
     const [searchValue, setSearchValue] = useState(undefined);
     const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+    const [modalIsOpen, setIsOpen] = useState(false);
     const [noPokemonFound, setNoPokemonFound] = useState<boolean>(false);
+
     const handleSearch = async () => {
         const result = await searchPokemons(searchValue);
         setPokemons(result);
-        setNoPokemonFound(result?.length == 0);
+        setNoPokemonFound(result?.length === 0);
     }
     const handleInput = (e: any) => {
         const fieldValue = e.nativeEvent.target.value;
         setSearchValue(fieldValue);
     }
+    const openModal = () => setIsOpen(true);
+    const closeModal = () => setIsOpen(false);
 
     return (
         <div className="w-[800px] mx-auto justify-center flex mt-10">
@@ -33,10 +38,10 @@ export const HomePage = () => {
                         return <PokemonCard key={p.name} name={p.name} photoUrl={p.photoUrl} />
                     })}
                 </div>
-                <div className="p-4">
-
-                </div>
             </div>
+            <Modal isOpen={modalIsOpen}>
+                <PokemonDetails />
+            </Modal>
         </div>
     );
 }

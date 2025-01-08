@@ -1,3 +1,5 @@
-export const pokemonDetails = () => {
-
+export const PokemonDetails = () => {
+    return (
+        <></>
+    );
 }
