@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HOME_PATH } from '../../../constants';
 
-const testUserEmail = process.env?.TEST_USER_EMAIL;
-const testUserPassword = process.env?.TEST_USER_TEST_USER_PASSWORD;
+const testUserEmail = process.env?.REACT_APP_TEST_USER_EMAIL;
+const testUserPassword = process.env?.REACT_APP_TEST_USER_PASSWORD;
 
 type LoginForm = {
     email?: string;
@@ -11,7 +11,6 @@ type LoginForm = {
 };
 
 export const LoginPage = () => {
-    console.log(process.env)
     const navigate = useNavigate();
     const errorMessage: string = 'Invalid Crendentials';
     const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
