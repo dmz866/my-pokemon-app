@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HOME_PATH } from '../../../constants';
+import { HOME_PATH, IS_USER_AUTHTENTICATED } from '../../../constants';
+import { setLocalItem } from "../../../utils";
 
 const testUserEmail = process.env?.REACT_APP_TEST_USER_EMAIL;
 const testUserPassword = process.env?.REACT_APP_TEST_USER_PASSWORD;
@@ -19,6 +20,7 @@ export const LoginPage = () => {
         if (!loginForm?.email || !loginForm?.password) return;
 
         if (loginForm.email === testUserEmail && loginForm.password === testUserPassword) {
+            setLocalItem(IS_USER_AUTHTENTICATED, true);
             navigate(HOME_PATH);
         }
         else {
