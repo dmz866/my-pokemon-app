@@ -1,6 +1,10 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+- User login credentials can be defined in the env file (REACT_APP_TEST_USERNAME, REACT_APP_TEST_USER_PASSWORD)
+
+- This project uses taildwind (https://tailwindcss.com/docs/guides/create-react-app)
 
 ## Available Scripts
 

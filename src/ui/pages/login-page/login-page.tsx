@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { HOME_PATH, IS_USER_AUTHTENTICATED } from '../../../constants';
 import { getLocalItem, setLocalItem } from "../../../utils";
@@ -13,7 +13,7 @@ export const LoginPage = () => {
     const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
     const [password, setPassword] = useState<string>('');
     const [username, setUsername] = useState<string>('');
-    const handleLogin = () => {
+    const handleLogin = useCallback(() => {
         if (!username || !password) return;
 
         if (username === testUsername && password === testUserPassword) {
@@ -23,7 +23,8 @@ export const LoginPage = () => {
         else {
             setShowErrorMessage(true);
         }
-    };
+    }, [navigate, username, password]);
+
 
     useEffect(() => {
         if (isUserAuthenticated === 'true') {
