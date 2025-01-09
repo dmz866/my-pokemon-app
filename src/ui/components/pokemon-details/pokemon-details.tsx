@@ -14,13 +14,13 @@ export const PokemonDetails = ({ pokemon, handleClose }: PokemonDetailsProps) =>
                 <div>
                     <p className="font-bold text-xl">Abilities</p>
                     <div className="flex-row flex-wrap">
-                        {pokemon.abilities.map(a => (<li>{a}</li>))}
+                        {pokemon.abilities.map(a => (<li key={a}>{a}</li>))}
                     </div>
                 </div>
                 <div className="px-10">
                     <p className="font-bold text-xl">Moves</p>
                     <div className="flex flex-col h-44 overflow-auto">
-                        {pokemon.moves.map(a => (<li>{a}</li>))}
+                        {pokemon.moves.map(a => (<li key={a}>{a}</li>))}
                     </div>
                 </div>
             </div>

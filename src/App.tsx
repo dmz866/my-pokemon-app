@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavigationRouter } from './routing';
 
 const App = () => {
