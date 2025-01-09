@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from 'react-modal';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { ClipLoader } from "react-spinners";
 import { getAllPokemonsUseCase } from "../../../api/use-cases/get-all-pokemons-use-case";
 import { getPokemonByNameUseCase } from '../../../api/use-cases/get-pokemon-by-name-use-case';

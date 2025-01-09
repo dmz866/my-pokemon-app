@@ -1,7 +1,7 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { HomePage, LoginPage } from '../ui';
 import { ProtectedRoute } from './private-route';
 import { HOME_PATH, LOGIN_PATH } from '../constants';
+import { BrowserRouter, Routes, Route } from 'react-router';
 
 export const NavigationRouter = () => {
 	return (

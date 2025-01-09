@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { HOME_PATH, IS_USER_AUTHTENTICATED } from '../../../constants';
 import { getLocalItem, setLocalItem } from "../../../utils";
 
@@ -37,15 +37,15 @@ export const LoginPage = () => {
                 <p className='text-3xl font-bold text-white'>Pokemon App</p>
                 <div className="p-4 flex-row text-white">
                     <p>Username</p>
-                    <input name='username' defaultValue={username} placeholder="Enter your Username" type="text" className="text-black mt-1 px-2 py-1 border rounded-lg" onChange={(e: any) => setUsername(e.target.value)} />
+                    <input data-testid="username" name='username' defaultValue={username} placeholder="Enter your Username" type="text" className="text-black mt-1 px-2 py-1 border rounded-lg" onChange={(e: any) => setUsername(e.target.value)} />
                 </div>
                 <div className="p-4 flex-row text-white">
                     <p>Password</p>
-                    <input name='password' required defaultValue={password}
+                    <input name='password' required defaultValue={password} data-testid="password"
                         placeholder="Enter your Password" type="password" className="text-black mt-1 px-2 py-1 border rounded-lg" onChange={(e: any) => setPassword(e.target.value)} />
                 </div>
                 <div className="p-4">
-                    <button disabled={!username || !password} className="disabled:bg-gray-200 w-full border rounded-lg bg-green-200" onClick={handleLogin}>Login</button>
+                    <button data-testid="login-button" disabled={!username || !password} className="disabled:bg-gray-200 w-full border rounded-lg bg-green-200" onClick={handleLogin}>Login</button>
                 </div>
                 <div className="px-4">
                     {
