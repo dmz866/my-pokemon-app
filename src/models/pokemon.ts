@@ -3,4 +3,5 @@ export type Pokemon = {
     photoUrl: string;
     abilities: string[];
     moves: string[];
+    forms: string[];
 }

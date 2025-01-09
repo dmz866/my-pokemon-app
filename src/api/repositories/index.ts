@@ -1,1 +1,1 @@
-export * from './search-pokemons';
+export * from './pokemon-repository';

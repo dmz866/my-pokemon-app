@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
-import { searchPokemons } from '../../../api/repositories';
+import { ClipLoader } from "react-spinners";
+import { getAllPokemonsUseCase } from "../../../api/use-cases/get-all-pokemons-use-case";
+import { getPokemonByNameUseCase } from '../../../api/use-cases/get-pokemon-by-name-use-case';
 import { IS_USER_AUTHTENTICATED, LOGIN_PATH } from "../../../constants";
 import { Pokemon } from "../../../models";
 import { removeLocalItem } from "../../../utils";
@@ -12,7 +14,10 @@ export const HomePage = () => {
     const [searchValue, setSearchValue] = useState(undefined);
     const [pokemons, setPokemons] = useState<Pokemon[]>([]);
     const [pokemonSelected, setPokemonSelected] = useState<Pokemon>();
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [showCurrentPage, setShowCurrentPage] = useState(false);
     const [noPokemonFound, setNoPokemonFound] = useState<boolean>(false);
 
     const handleSignOut = () => {
@@ -23,10 +28,23 @@ export const HomePage = () => {
         setPokemonSelected(pokemon);
         openModal();
     };
-    const handleSearch = async (e: any) => {
-        const result = await searchPokemons(searchValue);
+    const handleSearch = async () => {
+        let result: Pokemon[] = [];
+
+        setIsLoading(true);
+
+        if (searchValue) {
+            result = [await getPokemonByNameUseCase(searchValue)];
+            setShowCurrentPage(false);
+        }
+        else {
+            result = await getAllPokemonsUseCase(currentPage);
+            setShowCurrentPage(true);
+        }
+
         setPokemons(result);
         setNoPokemonFound(result?.length === 0);
+        setIsLoading(false);
     }
     const handleInput = (e: any) => {
         const fieldValue = e.nativeEvent.target.value;
@@ -34,6 +52,14 @@ export const HomePage = () => {
     }
     const openModal = () => setIsOpen(true);
     const closeModal = () => setIsOpen(false);
+    const previousPage = () => {
+        setCurrentPage(prev => prev - 1);
+        handleSearch();
+    };
+    const nextPage = () => {
+        setCurrentPage(prev => prev + 1);
+        handleSearch();
+    };
 
     return (
         <div className="flex-row">
@@ -46,6 +72,25 @@ export const HomePage = () => {
                             <input name='searchValue' type="text" className="text-black w-2/3 py-1 px-2 border rounded-lg" onChange={handleInput} />
                             <button className="mx-2 border rounded-lg bg-green-200 w-1/3 p-0 py-1" onClick={handleSearch}>Search</button>
                         </div>
+                    </div>
+                    {
+                        showCurrentPage &&
+                        <div className="p-3">
+                            <p className="mb-4">Current Page: {currentPage}</p>
+                            <button disabled={currentPage === 1} className="disabled:bg-gray-200 border rounded-lg text-blue-400 mr-5 px-3" onClick={previousPage}>Previous Page</button>
+                            <button className="border rounded-lg text-blue-400 mr-5 px-3" onClick={nextPage}>Next Page</button>
+                        </div>
+                    }
+                    <div className="flex justify-center">
+                        {
+                            isLoading &&
+                            <ClipLoader
+                                loading={isLoading}
+                                size={150}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                        }
                     </div>
                     <div className="p-3 flex flex-wrap">
                         {noPokemonFound && <p>No Pokemons found</p>}
@@ -71,6 +116,6 @@ const modalStyles = {
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
         padding: 0,
-        width: '500px',
+        width: '550px',
     },
 };
