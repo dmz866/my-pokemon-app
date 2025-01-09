@@ -7,6 +7,8 @@ module.exports = {
 		extend: {
 			backgroundImage: {
 				'forest': "url('../public/images/forest.jpg')",
+				'pokeball': "url('../public/images/pokeball.jpg')",
+				'pokemon': "url('../public/images/pokemon-bg.avif')",
 			  }
 		},
 	},

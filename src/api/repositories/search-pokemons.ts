@@ -21,7 +21,9 @@ export const searchPokemons = async (searchValue?: string, page: number = 1, lim
             const pokemonsFound = pokemonDetails.map(p => {
                 const pokemon: Pokemon = {
                     name: p.data.name,
-                    photoUrl: p.data.sprites?.front_default
+                    photoUrl: p.data.sprites?.front_default,
+                    abilities: p.data.abilities.map(a => a.ability.name),
+                    moves: p.data.moves.map(m => m.move.name),
                 };
 
                 return pokemon;
@@ -35,7 +37,9 @@ export const searchPokemons = async (searchValue?: string, page: number = 1, lim
         if (result) {
             const pokemon: Pokemon = {
                 name: result.name,
-                photoUrl: result.sprites?.front_default
+                photoUrl: result.sprites?.front_default,
+                abilities: result.abilities.map(a => a.ability.name),
+                moves: result.moves.map(m => m.move.name),
             };
 
             return [pokemon];

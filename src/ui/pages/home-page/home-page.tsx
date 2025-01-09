@@ -7,10 +7,15 @@ import { PokemonCard, PokemonDetails } from "../../components";
 export const HomePage = () => {
     const [searchValue, setSearchValue] = useState(undefined);
     const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+    const [pokemonSelected, setPokemonSelected] = useState<Pokemon>();
     const [modalIsOpen, setIsOpen] = useState(false);
     const [noPokemonFound, setNoPokemonFound] = useState<boolean>(false);
 
-    const handleSearch = async () => {
+    const handleSelectPokemon = (pokemon: Pokemon) => {
+        setPokemonSelected(pokemon);
+        openModal();
+    };
+    const handleSearch = async (e: any) => {
         const result = await searchPokemons(searchValue);
         setPokemons(result);
         setNoPokemonFound(result?.length === 0);
@@ -35,13 +40,26 @@ export const HomePage = () => {
                 <div className="p-3 flex flex-wrap">
                     {noPokemonFound && <p>No Pokemons found</p>}
                     {pokemons?.map((p) => {
-                        return <PokemonCard key={p.name} name={p.name} photoUrl={p.photoUrl} />
+                        return <PokemonCard key={p.name} pokemon={p} handlePokemonSelection={handleSelectPokemon} />
                     })}
                 </div>
             </div>
-            <Modal isOpen={modalIsOpen}>
-                <PokemonDetails />
+            <Modal isOpen={modalIsOpen} style={modalStyles}>
+                <PokemonDetails handleClose={closeModal} pokemon={pokemonSelected!} />
             </Modal>
         </div>
     );
 }
+
+const modalStyles = {
+    content: {        
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        padding: 0,
+        width: '500px',
+    },
+};
